@@ -1,0 +1,77 @@
+manifest_version: 2
+type: DCM_PROJECT
+default_target: 'DEV'
+
+targets:
+  DEV:
+    account_identifier: TC26009
+    project_name: 'EDX_DB_DCM.EDX_SCH_DCM.ENTERPRISE_SCAFFOLD'
+    project_owner: ACCOUNTADMIN
+    templating_config: 'DEV'
+
+  STAGING:
+    account_identifier: TC26009
+    project_name: 'EDX_DB_DCM.EDX_SCH_DCM.ENTERPRISE_SCAFFOLD'
+    project_owner: ACCOUNTADMIN
+    templating_config: 'STAGING'
+
+  PROD:
+    account_identifier: TC26009
+    project_name: 'EDX_DB_DCM.EDX_SCH_DCM.ENTERPRISE_SCAFFOLD'
+    project_owner: ACCOUNTADMIN
+    templating_config: 'PROD'
+
+templating:
+  defaults:
+    env_suffix: _DEV
+    project_db: ENTERPRISE
+    wh_size: XSMALL
+    etl_wh_size: SMALL
+    analytics_wh_size: SMALL
+    auto_suspend_seconds: 300
+    data_retention_days_raw: 14
+    data_retention_days_curated: 90
+    data_retention_days_serve: 30
+    dt_target_lag: "1 hour"
+    enable_sandbox: true
+    teams:
+      - name: "MARKETING"
+        wh_size: "XSMALL"
+      - name: "FINANCE"
+        wh_size: "SMALL"
+      - name: "ENGINEERING"
+        wh_size: "XSMALL"
+
+  configurations:
+    DEV:
+      env_suffix: _DEV
+      wh_size: XSMALL
+      etl_wh_size: XSMALL
+      analytics_wh_size: XSMALL
+      data_retention_days_raw: 1
+      data_retention_days_curated: 7
+      data_retention_days_serve: 7
+      dt_target_lag: "1 hour"
+      enable_sandbox: true
+
+    STAGING:
+      env_suffix: _STG
+      wh_size: SMALL
+      etl_wh_size: SMALL
+      analytics_wh_size: SMALL
+      data_retention_days_raw: 7
+      data_retention_days_curated: 30
+      data_retention_days_serve: 14
+      dt_target_lag: "30 minutes"
+      enable_sandbox: false
+
+    PROD:
+      env_suffix: _PROD
+      wh_size: MEDIUM
+      etl_wh_size: MEDIUM
+      analytics_wh_size: LARGE
+      data_retention_days_raw: 14
+      data_retention_days_curated: 90
+      data_retention_days_serve: 30
+      dt_target_lag: "15 minutes"
+      enable_sandbox: false

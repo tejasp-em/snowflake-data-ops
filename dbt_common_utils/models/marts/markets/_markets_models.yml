@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: dim_products
+    columns:
+      - name: product_sk
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null
+      - name: list_price
+        tests:
+          - not_null
+      - name: cost_price
+        tests:
+          - not_null
+
+  - name: fct_market_performance
+    columns:
+      - name: category
+        tests:
+          - not_null
+      - name: product_name
+        tests:
+          - not_null
+      - name: gross_revenue
+        tests:
+          - not_null
+      - name: total_margin
+        tests:
+          - not_null

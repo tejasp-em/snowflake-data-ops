@@ -1,0 +1,12 @@
+dbt_common_utils:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ""
+      user: ""
+      role: ACCOUNTADMIN
+      database: DBT_COMMON_UTILS_DB
+      warehouse: COMPUTE_WH
+      schema: DBT_COMMON_UTILS
+      threads: 4

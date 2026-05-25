@@ -1,0 +1,15 @@
+# dbt build artifacts
+dbt_common_utils/target/
+dbt_common_utils/logs/
+dbt_common_utils/dbt_packages/
+
+# DCM output artifacts
+enterprise_scaffold/out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

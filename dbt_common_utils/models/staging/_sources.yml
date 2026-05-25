@@ -1,0 +1,81 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ECOMMERCE
+    schema: ECOMMERCE_RAW
+    tables:
+      - name: raw_customers
+        loaded_at_field: created_at
+        freshness:
+          warn_after: {count: 48, period: hour}
+          error_after: {count: 96, period: hour}
+        columns:
+          - name: customer_id
+            tests:
+              - not_null
+              - unique
+          - name: email
+            tests:
+              - unique
+          - name: segment
+            tests:
+              - accepted_values:
+                  values: ['Enterprise', 'SMB', 'Mid-Market']
+
+      - name: raw_orders
+        loaded_at_field: order_date
+        freshness:
+          warn_after: {count: 48, period: hour}
+          error_after: {count: 96, period: hour}
+        columns:
+          - name: order_id
+            tests:
+              - not_null
+              - unique
+          - name: customer_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'raw_customers')
+                  field: customer_id
+          - name: status
+            tests:
+              - accepted_values:
+                  values: ['completed', 'pending', 'refunded', 'cancelled']
+          - name: channel
+            tests:
+              - accepted_values:
+                  values: ['online', 'partner', 'direct']
+
+      - name: raw_products
+        columns:
+          - name: product_id
+            tests:
+              - not_null
+              - unique
+          - name: category
+            tests:
+              - not_null
+
+      - name: raw_transactions
+        columns:
+          - name: transaction_id
+            tests:
+              - not_null
+              - unique
+          - name: order_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'raw_orders')
+                  field: order_id
+          - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'raw_products')
+                  field: product_id
+          - name: quantity
+            tests:
+              - not_null

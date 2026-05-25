@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_customers
+    columns:
+      - name: customer_sk
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: email
+        tests:
+          - not_null
+      - name: segment
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Enterprise', 'SMB', 'Mid-Market']
+      - name: lifetime_orders
+      - name: lifetime_revenue
+
+  - name: fct_revenue
+    columns:
+      - name: order_year
+        tests:
+          - not_null
+      - name: order_month
+        tests:
+          - not_null
+      - name: segment
+        tests:
+          - not_null
+      - name: gross_revenue
+        tests:
+          - not_null
+      - name: total_margin
+        tests:
+          - not_null
+      - name: margin_pct
+        tests:
+          - not_null
